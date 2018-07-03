@@ -1,18 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Wrapper from './components/Wrapper';
+import Title from './components/Title';
+import Koala from './components/Koala';
+import Form from './components/Form';
 
 class App extends Component {
+
+  state = {
+    name: 'Greg',
+    age: '30',
+    gender: 'Male',
+    transfer: 'false',
+    notes: 'Really Cool',
+    // markready: '',
+    // remove: ''
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Wrapper>
+          <Title />
+        </Wrapper>
+        <Form />
+        <Koala
+          // id={item.id}
+          // key={item.id}
+          name={this.state.name}
+          age={this.state.age}
+          gender={this.state.gender}
+          ready={this.state.transfer}
+          notes={this.state.notes}
+        // onClick={this.purchase}
+        />
+
       </div>
     );
   }
