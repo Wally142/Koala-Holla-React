@@ -5,15 +5,17 @@ const Form = props =>
 
     <div className="form-group">
         <h2 className="title">Koala Intake Data</h2>
-        <input type="text" className="form-control" placeholder="Name" />
+        <input onChange={() =>props.updateKoala} type="text" className="form-control" placeholder="Name" />
         <br />
-        <input type="text" className="form-control" placeholder="Age" />
+        <input onChange={props.updateKoala}  type="text" className="form-control" placeholder="Age" />
         <br />
-        <input type="text" className="form-control" placeholder="Gender" />
+        <input onChange={props.updateKoala}  type="text" className="form-control" placeholder="Gender" />
         <br />
-        <input type="text" className="form-control" placeholder="Transfer" />
+        <input onChange={props.updateKoala}  type="text" className="form-control" placeholder="Transfer" />
         <br />
-        <input type="text" className="form-control" placeholder="Notes" />
+        <input onChange={props.updateKoala}  type="text" className="form-control" placeholder="Notes" />
+        <br />
+        <button onClick={() => props.onClick()} className="btn btn-primary">Submit Koala</button>
     </div>;
 
 export default Form
