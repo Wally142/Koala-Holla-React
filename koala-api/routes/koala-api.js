@@ -50,7 +50,7 @@ router.post('/new-koala', function (req, res) {
     });
 });//end post route
 
-router.delete('/remove/:id', function (req, res) {
+router.get('/remove/:id', function (req, res) {
     const id = req.params.id;
 
     pool.connect(function (err, db, done) {

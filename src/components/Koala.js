@@ -22,9 +22,9 @@ const Koala = (props) => {
                         <td className="tabletext">{item.name}</td>
                         <td className="tabletext">{item.age}</td>
                         <td className="tabletext">{item.gender}</td>
-                        <td className="tabletext">{item.ready}</td>
+                        <td className="tabletext">{item.transfer}</td>
                         <td className="tabletext">{item.notes}</td>
-                        <td className="tabletext"><button>Mark Transfer</button></td>
+                        <td onClick={() => props.onChange()} className="tabletext"><button>Mark Transfer</button></td>
                         <td onClick={() => props.onClick(item.id)} className="tabletext"><button>Delete</button></td>
                     </tr>
                 ))}

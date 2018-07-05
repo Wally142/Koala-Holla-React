@@ -14,7 +14,7 @@ class App extends Component {
     name: '',
     age: '',
     gender: '',
-    transfer: false,
+    transfer: 'false',
     notes: '',
     // markready: '',
     // remove: ''
@@ -37,6 +37,10 @@ class App extends Component {
     this.getKoalas();
   }
 
+  componentDidUpdate() {
+    this.getKoalas();
+  }
+
   updateName(event) {
     this.setState({ name: event.target.value })
   }
@@ -49,8 +53,9 @@ class App extends Component {
     this.setState({ gender: event.target.value })
   }
 
-  updateTransfer(event) {
-    this.setState({ transfer: event.target.value })
+  updateTransfer() {
+     this.setState({ transfer: 'true' })
+     console.log('hello')
   }
 
   updateNotes(event) {
@@ -94,7 +99,8 @@ class App extends Component {
   }
 
   deleteKoala(id) {
-    fetch(`${url}/remove/${id}`)
+    const kId = id;
+    fetch(`${url}/remove/${kId}`)
       .then(response => {
         console.log(`delete was successful: ${response}`)
       })
@@ -110,14 +116,12 @@ class App extends Component {
         </Wrapper>
         {/* <Form onClick={this.addKoala} onChange={this.updateKoala} /> */}
         <div className="form-group">
-          <h2 className="title">Koala Intake Data</h2>
+          <h2 className="title">Koala Intake </h2>
           <input value={this.state.name} onChange={this.updateName} type="text" className="form-control" placeholder="Name" />
           <br />
           <input value={this.state.age} onChange={this.updateAge} type="text" className="form-control" placeholder="Age" />
           <br />
           <input value={this.state.gender} onChange={this.updateGender} type="text" className="form-control" placeholder="Gender" />
-          <br />
-          <input value={this.state.transfer} onChange={this.updateTransfer} type="text" className="form-control" placeholder="Transfer" />
           <br />
           <input value={this.state.notes} onChange={this.updateNotes} type="text" className="form-control" placeholder="Notes" />
           <br />
@@ -126,6 +130,7 @@ class App extends Component {
         <Koala
           koala={this.state.koalas}
           onClick={this.deleteKoala}
+          onChange={this.updateTransfer}
         />
       </div>
     );
