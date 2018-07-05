@@ -17,15 +17,17 @@ const Koala = (props) => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td className="tabletext">{props.name}</td>
-                    <td className="tabletext">{props.age}</td>
-                    <td className="tabletext">{props.gender}</td>
-                    <td className="tabletext">{props.ready}</td>
-                    <td className="tabletext">{props.notes}</td>
-                    <td className="tabletext"><button>Mark Transfer</button></td>
-                    <td className="tabletext"><button>Delete</button></td>
-                </tr>
+                {props.koala.map(item => (
+                    <tr key={item.id}>
+                        <td className="tabletext">{item.name}</td>
+                        <td className="tabletext">{item.age}</td>
+                        <td className="tabletext">{item.gender}</td>
+                        <td className="tabletext">{item.ready}</td>
+                        <td className="tabletext">{item.notes}</td>
+                        <td className="tabletext"><button>Mark Transfer</button></td>
+                        <td onClick={() => props.onClick(item.id)} className="tabletext"><button>Delete</button></td>
+                    </tr>
+                ))}
             </tbody>
         </table>
     )

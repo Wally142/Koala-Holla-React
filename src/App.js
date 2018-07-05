@@ -3,35 +3,69 @@ import './App.css';
 import Wrapper from './components/Wrapper';
 import Title from './components/Title';
 import Koala from './components/Koala';
-import Form from './components/Form';
+// import Form from './components/Form';
 
-const url = 'http://localhost:5000/api/';
+const url = 'http://localhost:5000/api';
 
 class App extends Component {
 
   state = {
-    name: 'Greg',
-    age: '30',
-    gender: 'Male',
-    transfer: 'true',
-    notes: 'Legit',
+    koalas: [],
+    name: '',
+    age: '',
+    gender: '',
+    transfer: false,
+    notes: '',
     // markready: '',
     // remove: ''
   }
 
   constructor(props) {
     super(props)
-    this.updateKoala = this.updateKoala.bind(this)
-    
+    this.updateName = this.updateName.bind(this)
+    this.updateAge = this.updateAge.bind(this)
+    this.updateGender = this.updateGender.bind(this)
+    this.updateTransfer = this.updateTransfer.bind(this)
+    this.updateNotes = this.updateNotes.bind(this)
+    this.addKoala = this.addKoala.bind(this)
+    this.deleteKoala = this.deleteKoala.bind(this)
+
   }
 
-  updateKoala(event) {
+  componentDidMount() {
+    console.log('koalas loaded')
+    this.getKoalas();
+  }
+
+  updateName(event) {
     this.setState({ name: event.target.value })
+  }
+
+  updateAge(event) {
     this.setState({ age: event.target.value })
+  }
+
+  updateGender(event) {
     this.setState({ gender: event.target.value })
+  }
+
+  updateTransfer(event) {
     this.setState({ transfer: event.target.value })
+  }
+
+  updateNotes(event) {
     this.setState({ notes: event.target.value })
-    console.log(this.state.name);
+  }
+
+  getKoalas() {
+    fetch(`${url}/koalas`)
+      .then(response => response.json())
+      .then(koalaResponseArray => {
+        this.setState({
+          koalas: koalaResponseArray
+        })
+      })
+      .catch(error => console.log(`Error with fetch getKoalas: ${error} `));
   }
 
   addKoala() {
@@ -53,9 +87,18 @@ class App extends Component {
     fetch(request)
       .then(response => {
         console.log(`post was successful: ${response}`)
-        // this.getKoalas();
+        this.getKoalas();
       })
       .catch(error => console.log(`fetch failed addCountry: ${error}`)
+      )
+  }
+
+  deleteKoala(id) {
+    fetch(`${url}/remove/${id}`)
+      .then(response => {
+        console.log(`delete was successful: ${response}`)
+      })
+      .catch(error => console.log(`fetch failed delete koala: ${error}`)
       )
   }
 
@@ -65,37 +108,28 @@ class App extends Component {
         <Wrapper>
           <Title />
         </Wrapper>
-        <Form onClick={this.addKoala} onChange={this.updateKoala} />
+        {/* <Form onClick={this.addKoala} onChange={this.updateKoala} /> */}
+        <div className="form-group">
+          <h2 className="title">Koala Intake Data</h2>
+          <input value={this.state.name} onChange={this.updateName} type="text" className="form-control" placeholder="Name" />
+          <br />
+          <input value={this.state.age} onChange={this.updateAge} type="text" className="form-control" placeholder="Age" />
+          <br />
+          <input value={this.state.gender} onChange={this.updateGender} type="text" className="form-control" placeholder="Gender" />
+          <br />
+          <input value={this.state.transfer} onChange={this.updateTransfer} type="text" className="form-control" placeholder="Transfer" />
+          <br />
+          <input value={this.state.notes} onChange={this.updateNotes} type="text" className="form-control" placeholder="Notes" />
+          <br />
+          <button onClick={this.addKoala} className="btn btn-primary">Submit Koala</button>
+        </div>
         <Koala
-          // id={item.id}
-          // key={item.id}
-          name={this.state.name}
-          age={this.state.age}
-          gender={this.state.gender}
-          ready={this.state.transfer}
-          notes={this.state.notes}
-        // onClick={this.purchase}
+          koala={this.state.koalas}
+          onClick={this.deleteKoala}
         />
-
       </div>
     );
   }
 }
 
 export default App;
-
-// updateAge(event) {
-//   this.setState({ age: event.target.value })
-// }
-
-// updateGender(event) {
-//   this.setState({ gender: event.target.value })
-// }
-
-// updateTransfer(event) {
-//   this.setState({ transfer: event.target.value })
-// }
-
-// updateNotes(event) {
-//   this.setState({ notes: event.target.value })
-// }

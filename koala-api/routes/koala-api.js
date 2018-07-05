@@ -3,23 +3,23 @@ const router = express();
 
 const pool = require('../modules/pool');
 
-// router.get('/koalas', function (req, res) {
-//     pool.connect(function (err, db, done) {
-//         if (err) {
-//             console.error(err);
-//             res.status(500).send({ 'error': err });
-//         } else {
-//             db.query('SELECT * FROM country', function (err, table) {
-//                 done();
-//                 if (err) {
-//                     return res.status(400).send({ error: err })
-//                 } else {
-//                     return res.status(200).send(table.rows)
-//                 }
-//             })
-//         }
-//     })
-// });
+router.get('/koalas', function (req, res) {
+    pool.connect(function (err, db, done) {
+        if (err) {
+            console.error(err);
+            res.status(500).send({ 'error': err });
+        } else {
+            db.query('SELECT * FROM koala', function (err, table) {
+                done();
+                if (err) {
+                    return res.status(400).send({ error: err })
+                } else {
+                    return res.status(200).send(table.rows)
+                }
+            })
+        }
+    })
+});// end get route
 
 router.post('/new-koala', function (req, res) {
     const name = req.body.name;
@@ -48,28 +48,26 @@ router.post('/new-koala', function (req, res) {
                 })
         }
     });
-    console.log(req.body);
-});
+});//end post route
 
+router.delete('/remove/:id', function (req, res) {
+    const id = req.params.id;
 
-// router.delete('/remove/:id', function (req, res) {
-//     const id = req.params.id;
-
-//     pool.connect(function (err, db, done) {
-//         if (err) {
-//             return res.status(400).send(err)
-//         } else {
-//             db.query('DELETE FROM country WHERE ID = $1', [Number(id)], function (err, result) {
-//                 done();
-//                 if (err) {
-//                     return res.status(400).send(err)
-//                 } else {
-//                     return res.status(200).send({ message: 'success delete record' })
-//                 }
-//             })
-//         }
-//     })
-//     console.log(id);
-// });
+    pool.connect(function (err, db, done) {
+        if (err) {
+            return res.status(400).send(err)
+        } else {
+            db.query('DELETE FROM koala WHERE ID = $1', [Number(id)], function (err, result) {
+                done();
+                if (err) {
+                    return res.status(400).send(err)
+                } else {
+                    return res.status(200).send({ message: 'successfully deleted record' })
+                }
+            })
+        }
+    })
+    console.log(id);
+});//end delete route
 
 module.exports = router;
