@@ -54,8 +54,8 @@ class App extends Component {
   }
 
   updateTransfer() {
-     this.setState({ transfer: 'true' })
-     console.log('hello')
+    this.setState({ transfer: 'true' })
+    console.log('hello')
   }
 
   updateNotes(event) {
