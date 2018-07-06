@@ -67,7 +67,31 @@ router.get('/remove/:id', function (req, res) {
             })
         }
     })
-    console.log(id);
 });//end delete route
+
+router.put('/update/:id', function (req, res) {
+    const id = req.params.id
+
+    pool.connect((err, db, done) => {
+        if (err) {
+            console.error('error open connection', err);
+            return res.status(400).send({ error: err });
+        }
+        else {
+            db.query('UPDATE koala SET transfer = true where id = $1;',
+                [Number(id)], (err, table) => {
+                    done();
+                    if (err) {
+                        console.error('error running query', err);
+                        return res.status(400).send({ error: err });
+                    }
+                    else {
+                        console.log('Data Inserted: successfully!');
+                        res.status(201).send({ message: 'Data Inserted!' })
+                    }
+                })
+        }
+    });
+});//end post route
 
 module.exports = router;

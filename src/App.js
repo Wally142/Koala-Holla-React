@@ -25,10 +25,10 @@ class App extends Component {
     this.updateName = this.updateName.bind(this)
     this.updateAge = this.updateAge.bind(this)
     this.updateGender = this.updateGender.bind(this)
-    this.updateTransfer = this.updateTransfer.bind(this)
     this.updateNotes = this.updateNotes.bind(this)
     this.addKoala = this.addKoala.bind(this)
     this.deleteKoala = this.deleteKoala.bind(this)
+    this.updateKoalaStatus = this.updateKoalaStatus.bind(this)
 
   }
 
@@ -53,13 +53,24 @@ class App extends Component {
     this.setState({ gender: event.target.value })
   }
 
-  updateTransfer() {
-    this.setState({ transfer: 'true' })
-    console.log('hello')
-  }
-
   updateNotes(event) {
     this.setState({ notes: event.target.value })
+  }
+
+  updateKoalaStatus(id) {
+    
+    const request = new Request(`${url}/update/${id}`, {
+      method: 'PUT',
+      headers: new Headers({ 'Content-Type': 'application/json' }),
+    })
+
+    fetch(request)
+      .then(response => {
+        console.log('Updated Successfully')
+        this.getKoalas();
+      })
+      .catch(error => console.log(`fetch failed update Koala: ${error}`)
+      )
   }
 
   getKoalas() {
@@ -99,8 +110,8 @@ class App extends Component {
   }
 
   deleteKoala(id) {
-    const kId = id;
-    fetch(`${url}/remove/${kId}`)
+
+    fetch(`${url}/remove/${id}`)
       .then(response => {
         console.log(`delete was successful: ${response}`)
       })
@@ -130,7 +141,7 @@ class App extends Component {
         <Koala
           koala={this.state.koalas}
           onClick={this.deleteKoala}
-          onChange={this.updateTransfer}
+          transfer={this.updateKoalaStatus}
         />
       </div>
     );
