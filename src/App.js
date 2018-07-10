@@ -29,7 +29,6 @@ class App extends Component {
     this.addKoala = this.addKoala.bind(this)
     this.deleteKoala = this.deleteKoala.bind(this)
     this.updateKoalaStatus = this.updateKoalaStatus.bind(this)
-
   }
 
   componentDidMount() {
@@ -58,7 +57,7 @@ class App extends Component {
   }
 
   updateKoalaStatus(id) {
-    
+
     const request = new Request(`${url}/update/${id}`, {
       method: 'PUT',
       headers: new Headers({ 'Content-Type': 'application/json' }),
