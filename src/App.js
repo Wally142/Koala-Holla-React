@@ -104,7 +104,7 @@ class App extends Component {
         console.log(`post was successful: ${response}`)
         this.getKoalas();
       })
-      .catch(error => console.log(`fetch failed addCountry: ${error}`)
+      .catch(error => console.log(`fetch failed addKoala: ${error}`)
       )
   }
 
